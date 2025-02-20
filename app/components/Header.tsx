@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full transition-all duration-300 pl-4 pr-4 ${
+      className={`fixed flex top-0 left-0 w-full transition-all duration-300 pl-4 pr-4 ${
         isScrolled ? "bg-slate-800 py-2" : "bg-slate-800 py-4"
       } text-white`}
     >

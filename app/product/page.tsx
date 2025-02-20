@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import AutoSearch from './autoSearch';
 
 interface Product {
     id: number;
@@ -47,9 +48,9 @@ const ProductList: React.FC = () => {
         };
 
         const options: IntersectionObserverInit = {
-            root: null, // Theo dõi trong viewport
+            root: null,
             rootMargin: '0px',
-            threshold: 1.0 // Gọi khi phần tử cuối cùng hoàn toàn nằm trong viewport
+            threshold: 1.0
         };
 
         observer.current = new IntersectionObserver(callback, options);
@@ -67,9 +68,10 @@ const ProductList: React.FC = () => {
     }, [hasMore, loading]);
 
     return (
-        <div className='mt-[100px]'>
+        <div className='w-full items-center'>
             <h1>Product List</h1>
-            <div className='max-h-[500px] overflow-auto'>
+            <AutoSearch />
+            <div className='w-full max-h-[600px] overflow-auto'>
 
             <ul>
                 {products.map((product, index) => {
