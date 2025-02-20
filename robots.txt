@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /*/
+Sitemap: https://landing-page-nextjs-2025.vercel.app/sitemap.xml
