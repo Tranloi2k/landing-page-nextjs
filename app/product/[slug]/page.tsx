@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.data.name,
       description: post.data.description,
-      url: `https://yourwebsite.com/posts/${slug}`,
+      url: `https://landing-page-nextjs-eosin.vercel.app/loi.jpg`,
       // Có thể thêm các thuộc tính Open Graph khác
     },
     //  twitter: {
