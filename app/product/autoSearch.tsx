@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import debounce from "lodash/debounce";
+import axiosInstance from "@/config/axios";
 
 const AutoSearch = () => {
   const [query, setQuery] = useState<string>("");
@@ -8,28 +10,35 @@ const AutoSearch = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchSuggestions = async (searchTerm: string) => {
-   setLoading(true);
-   try {
-       const response = await fetch(`http://localhost:4000/search?q=${searchTerm}`);
-       const data = await response.json();
-       const names = data.map((item: { name: string }) => item.name);
-       setSuggestions(names);
-   } catch (error) {
-       console.error('Error fetching suggestions:', error);
-   } finally {
-       setLoading(false);
-   }
-};
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(`search?q=${searchTerm}`);
+      const data = await response.data;
+      const names = data.map((item: { name: string }) => item.name);
+      setSuggestions(names);
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const debouncedFetchSuggestions = debounce(fetchSuggestions, 600);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setQuery(value);
-
-    if (value) {
-      fetchSuggestions(value);
+  useEffect(() => {
+    if (query) {
+      debouncedFetchSuggestions(query);
     } else {
       setSuggestions([]);
     }
+
+    // Cleanup function để hủy bỏ debounce khi component unmount
+    return () => {
+      debouncedFetchSuggestions.cancel();
+    };
+  }, [query]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
   };
 
   const handleSuggestionClick = (suggestion: string) => {
