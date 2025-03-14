@@ -44,12 +44,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const ProductItem = async ({ params }: Props) => {
   const { slug } = await params;
   const { name, id } = getDataFromParam(slug);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: name,
+    image: "",
+    description: `product: ${name}`,
+  };
+
   return (
     <>
       <div className="mt-[100px] p-6 h-full">
         {name && <p>{name}</p>}
         {id && <p>{id}</p>}
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 };
