@@ -31,6 +31,7 @@ const LazyProductList = () => {
         const response = await axiosInstance.get<ApiResponse>(
           `products?page=${page}`
         );
+        console.log(response);
         setProducts((prev) => [...prev, ...response.data.products]);
         setHasMore(response.data.hasMore);
       } catch (error) {

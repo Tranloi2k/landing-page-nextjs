@@ -10,6 +10,7 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
     // Có thể thêm các header khác ở đây
   },
+  withCredentials: true,
 });
 
 // Bạn có thể thêm interceptor nếu cần
